@@ -1,0 +1,26 @@
+#!/bin/bash
+
+check() {
+    local array=("$@")
+    local -A seen
+    for element in "${array[@]}"; do
+        if [[ -n "${seen[$element]}" ]]; then
+            return 1
+        fi
+        seen[$element]=1
+    done
+    return 0
+}
+
+
+if [ "$#" -eq 0 ]; then
+    echo "Массив то дай, или я пустоту сравнивать должен? -_-"
+	exit 1
+fi
+
+check "$@"
+if [ $? -eq 0 ]; then
+    echo "Все элементы уникальны :D"
+else
+    echo "Есть дубликаты :/"
+fi
